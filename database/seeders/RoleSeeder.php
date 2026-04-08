@@ -20,7 +20,7 @@ class RoleSeeder extends Seeder
         $Role2 = Role::create(['name' => 'tecnico']);
         $Role3 = Role::create(['name' => 'viewer']);
 
-        Permission::create(['name' => 'admin.home'])->syncRoles([$Role1, $Role2, $Role3]);
+        Permission::create(['name' => 'admin.home']);
         
         Permission::create(['name' => 'admin.users.index']);
         Permission::create(['name' => 'admin.users.create']);
@@ -74,6 +74,28 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'admin.itens.create']);
         Permission::create(['name' => 'admin.itens.edit']);
         Permission::create(['name' => 'admin.itens.destroy']);  
+
+        $Role1->givePermissionTo(Permission::all());
+        $Role2->givePermissionTo([
+            'admin.home',
+            'admin.activos.index',
+            'admin.intervenciones.index',
+            'admin.intervenciones.create',
+            'admin.marcas.index',
+            'admin.marcas.create',
+            'admin.repuestos.index',
+            'admin.repuestos.create',
+            'admin.itens.index',
+            'admin.itens.create',
+        ]);
+        $Role3->givePermissionTo([
+            'admin.home',
+            'admin.activos.index',
+            'admin.intervenciones.index',
+            'admin.marcas.index',
+            'admin.repuestos.index',
+            'admin.itens.index',
+        ]);
 
 
     }

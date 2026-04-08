@@ -34,6 +34,7 @@
 
     <!-- Card para mostrar todas los activos fijos-->
     <div class="col-md-2 mr-auto">
+          
         <!-- Boton para crear activo fijo -->
                     <div class="form-group">
                         <a href="{{ route('admin.activos.create') }}">
@@ -59,6 +60,7 @@
                     
                     @if ($activos->isEmpty())
                         <tr>
+                         
                             <td colspan="5" class="text-center">No hay activos fijos registrados.</td>
                         </tr>
                         @else

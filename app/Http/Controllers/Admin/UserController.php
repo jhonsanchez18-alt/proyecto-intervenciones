@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Laravel\Jetstream\Role;
+//importamos el modelo Role de Spatie para obtener los roles disponibles
+use Spatie\Permission\Models\Role as ModelsRole;
+
 
 class UserController extends Controller
 {
@@ -12,6 +17,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        
         return view('admin.users.index');
     }
 
@@ -42,23 +48,29 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        //
+        $roles = ModelsRole::all();
+        return  view('admin.users.edit', compact('user', 'roles'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+    public function update(Request $request, User $user)
+{
+    // Asignar rol correctamente
+    $user->syncRoles([$request->role]);
+
+    return redirect()
+        ->route('admin.users.index')
+        ->with('success', "Usuario actualizado correctamente");
+}
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
         //
     }
