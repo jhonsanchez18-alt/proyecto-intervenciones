@@ -36,13 +36,17 @@
     <div class="col-md-2 mr-auto">
           
         <!-- Boton para crear activo fijo -->
-                    <div class="form-group">
+        <!-- Directiva can mostrar boton solo a los usuarios con rol que tengan permiso admin.activos.create -->
+        @can('admin.activos.create')
+        <div class="form-group">
                         <a href="{{ route('admin.activos.create') }}">
                         <button class="btn btn-primary btn-block mt-4">
                                  Crear activo fijo
                         </button>
                         </a>
                     </div>
+        @endcan
+                    
         </div> 
     <div class="card">
         <div class="card-body">
@@ -71,17 +75,31 @@
                             <td>{{ $activo->descripcion }}</td>
                             <td>{{ $activo->categoria->nombre }}</td>
                             <td>
-                                <a href="{{ route('admin.activos.show', $activo) }}" class="btn btn-info btn-sm">Detalles</a>
+                                @can('admin.activos.show')
+                                    <a href="{{ route('admin.activos.show', $activo) }}" class="btn btn-info btn-sm">Detalles</a>
+                                @else
+                                    <button class="btn btn-info btn-sm" disabled>Detalles</button>
+                                     
+                                    @endcan
                             </td>
                             <td>
-                                <a href="{{ route('admin.activos.edit', $activo) }}" class="btn btn-sm btn-warning">Editar</a>
+                                @can('admin.activos.edit')
+                                    <a href="{{ route('admin.activos.edit', $activo) }}" class="btn btn-sm btn-warning">Editar</a>
+                                @else
+                                    <button class="btn btn-sm btn-warning" disabled>Editar</button>
+                                    @endcan
                             </td>
+
                              <td width="10px">
-                                    <form action="{{ route('admin.activos.destroy', $activo) }}" method="POST" style="display:inline-block;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar esta categoria?')">Eliminar</button>
-                                    </form> 
+                                    @can('admin.activos.destroy')
+                                        <form action="{{ route('admin.activos.destroy', $activo) }}" method="POST" style="display:inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar esta categoria?')">Eliminar</button>
+                                        </form>
+                                    @else
+                                        <button class="btn btn-sm btn-danger" disabled>Eliminar</button>
+                                    @endcan
                                 </td>
                         </tr>
                     @endforeach

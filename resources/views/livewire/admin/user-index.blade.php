@@ -36,7 +36,7 @@
                     <th>Nombre</th>
                     <th>Email</th>
                     <th>Rol</th>
-                     <th></th>
+                     <th>Acciones</th>
                     
                 </tr>
                 <tbody>

@@ -8,14 +8,7 @@
 
 @section('content')
 
-   
-
- 
-
-
     @livewire('admin.user-index')
-
-    
 
 @stop
 @livewireScripts

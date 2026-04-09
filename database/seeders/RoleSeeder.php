@@ -31,11 +31,13 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'admin.categorias.edit']);
         Permission::create(['name' => 'admin.categorias.destroy']);
         Permission::create(['name' => 'admin.activos.index']);
+        Permission::create(['name' => 'admin.activos.show']);
         Permission::create(['name' => 'admin.activos.create']);
         Permission::create(['name' => 'admin.activos.edit']);
         Permission::create(['name' => 'admin.activos.destroy']);
         Permission::create(['name' => 'admin.intervenciones.index']);
         Permission::create(['name' => 'admin.intervenciones.create']);
+        Permission::create(['name' => 'admin.intervenciones.show']);
         Permission::create(['name' => 'admin.intervenciones.edit']);
         Permission::create(['name' => 'admin.intervenciones.destroy']);
         Permission::create(['name' => 'admin.estados.index']);
@@ -79,6 +81,7 @@ class RoleSeeder extends Seeder
         $Role2->givePermissionTo([
             'admin.home',
             'admin.activos.index',
+            'admin.activos.show',
             'admin.intervenciones.index',
             'admin.intervenciones.create',
             'admin.marcas.index',
@@ -92,9 +95,6 @@ class RoleSeeder extends Seeder
             'admin.home',
             'admin.activos.index',
             'admin.intervenciones.index',
-            'admin.marcas.index',
-            'admin.repuestos.index',
-            'admin.itens.index',
         ]);
 
 

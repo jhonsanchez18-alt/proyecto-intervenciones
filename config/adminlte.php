@@ -324,6 +324,8 @@ return [
             'text' => 'DashBoard    ',
             'route' => 'admin.home',
             'icon' => 'far fa-fw fa-file',
+            'can' => 'admin.home',
+            
             //'label' => 4,
             //'label_color' => 'success',
         ],
@@ -331,6 +333,7 @@ return [
             'text' => 'Usuarios   ',
             'route' => 'admin.users.index',
             'icon' => 'far fa-fw fa-file',
+            'can' => 'admin.users.index',
             //'label' => 4,
             //'label_color' => 'success',
         ],
@@ -339,6 +342,7 @@ return [
             'text' => 'Activos Fijos',
             'route' => 'admin.activos.index',
             'icon' => 'fa fa-cog fa-spin fa-3x fa-fw',
+            'can' => 'admin.activos.index',
         ],
         
         
@@ -350,51 +354,64 @@ return [
                     'text' => 'Categorias',
                     'route' => 'admin.categorias.index',
                     'icon' => 'fa fa-cubes',
+                    'can' => 'admin.categorias.index',
                         ],
                         [
                     'text' => 'Estados',
                     'route' => 'admin.estados.index',
                     'icon' => 'fa fa-hourglass-start',
+                    'can' => 'admin.estados.index',
                         ],
                          [
                     'text' => 'Marcas',
                     'route' => 'admin.marcas.index',
                     'icon' => 'fa fa-check-square',
+                    'can' => 'admin.marcas.index',
                         ],
                          [
                     'text' => 'Repuestos',
                     'route' => 'admin.repuestos.index',
                     'icon' => 'fa fa-cogs',
+                    'can' => 'admin.repuestos.index',
                         ],
                          [
                     'text' => 'Itens de intervención',
                     'route' => 'admin.itens.index',
                     'icon' => 'fa fa-cogs',
+                    'can' => 'admin.itens.index',
                           ],
                         [
                     'text' => 'Responsables',
                     'route' => 'admin.responsables.index',
                     'icon' => 'fas fa-fw fa-user',
+                    'can' => 'admin.responsables.index',
+                        
                         ],
                           [
                     'text' => 'Secciones',
                     'route' => 'admin.secciones.index',
                     'icon' => 'fa fa-cube',
+                    'can' => 'admin.secciones.index',
+                            
                         ],
                         [
                     'text' => 'Ubicaciones',
                     'route' => 'admin.ubicaciones.index',
                     'icon' => 'fa fa-map-marker',
+                    'can' => 'admin.ubicaciones.index',
+                        
                         ],
                         [
                     'text' => 'Tecnicos',
                     'route' => 'admin.tecnicos.index',
                     'icon' => 'fa fa-male',
+                    'can' => 'admin.tecnicos.index',
                         ],
                           [
                     'text' => 'Tipos de activos',
                     'route' => 'admin.tipos.index',
                     'icon' => 'fa fa-archive',
+                    'can' => 'admin.tipos.index',
                           ],
                           
                          

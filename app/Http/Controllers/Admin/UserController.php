@@ -64,7 +64,7 @@ class UserController extends Controller
 
     return redirect()
         ->route('admin.users.index')
-        ->with('success', "Usuario actualizado correctamente");
+        ->with('success', "Usuario {$user->name} actualizado correctamente");
 }
 
     /**
