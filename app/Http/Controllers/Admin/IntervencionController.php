@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Http\Controllers\Controller;
 use App\Models\Activo;
 use App\Models\Intervencion;
@@ -11,8 +11,11 @@ Use App\Http\Requests\StoreIntervencionRequest;
 use App\Models\ItenIntervencionAires;
 use App\Models\Repuesto;
 
+
+
 class IntervencionController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -46,10 +49,15 @@ class IntervencionController extends Controller
      */
     public function store(StoreIntervencionRequest $request, Activo $activo)
 {
+  $data = $request->validated();
+  $data['user_id'] = auth()->id(); // Asigna el ID del usuario autenticado
+  $intervencion = $activo->intervenciones()->create($data);
+
     // 1️⃣ Crear intervención
-    $intervencion = $activo->intervenciones()->create(
-        $request->validated()
-    );
+    //$intervencion = $activo->intervenciones()->create(
+       // $request->validated()
+
+   // );
     
 
     // 2️⃣ Guardar REPUESTOS (true y false)
@@ -97,6 +105,7 @@ class IntervencionController extends Controller
      */
 public function edit(Activo $activo, Intervencion $intervencione)
 {
+    $this->authorize('update', $intervencione); // Verifica permisos con la política
     $tipos = ['Preventiva', 'Correctiva', 'Revisión','Instalación','Baja', 'Traslado'];
 
     $tecnicos = Tecnico::all();
@@ -119,6 +128,7 @@ public function edit(Activo $activo, Intervencion $intervencione)
      */
    public function update(Request $request, Intervencion $intervencione)
 {
+    
     $activo = $intervencione->activo;
     $intervencione->update([
         'fecha_intervencion' => $request->fecha_intervencion,
@@ -126,6 +136,7 @@ public function edit(Activo $activo, Intervencion $intervencione)
         'tecnico_id'         => $request->tecnico_id,
         'quien_recibe'       => $request->quien_recibe,
         'observaciones'      => $request->observaciones,
+        'updated_by'         => auth()->id(),
     ]);
 
     // === REPUESTOS ===

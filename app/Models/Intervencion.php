@@ -25,6 +25,8 @@ protected static function booted()
         'observaciones',
         'tecnico_id',
         'quien_recibe',
+        'user_id',
+        'updated_by',
     ];
     //relacion de muchos a uno con activo
     public function activo()
