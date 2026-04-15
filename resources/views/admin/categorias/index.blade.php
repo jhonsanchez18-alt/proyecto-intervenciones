@@ -72,9 +72,17 @@
                 <!-- Botón -->
                 <div class="col-md-2">
                     <div class="form-group">
+                        <!-- Protegemos en el frontend desabilitando el boton de crear -->
+                        @can('admin.categorias.create')
                         <button class="btn btn-primary btn-block mt-4">
                             Crear categoría
                         </button>
+                        @else
+                         <button class="btn btn-primary btn-block mt-4" disabled>
+                            Crear categoría
+                        </button>
+                        @endcan
+
                     </div>
                 </div>
             </div>
@@ -103,17 +111,25 @@
                                 <td>{{ $categoria->nombre }}</td>
                                 <td>{{ $categoria->descripcion }}</td>
                                 <td width="10px">
+                                    @can('admin.categorias.edit')
                                     <a href="{{ route('admin.categorias.edit', $categoria) }}" class="btn btn-sm btn-warning">Editar</a>
+                                    @else
+                                    <button class="btn btn-sm btn-warning" disabled>Editar</button>
+                                    @endcan
                                 </td>
                             <!-- <td width="10px">
                                     <a href="{{ route('admin.categorias.show', $categoria) }}" class="btn btn-sm btn-info">Ver</a>
                                 </td>-->
                                 <td width="10px">
+                                    @can('admin.categorias.destroy')
                                     <form action="{{ route('admin.categorias.destroy', $categoria) }}" method="POST" style="display:inline-block;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar esta categoria?')">Eliminar</button>
                                     </form> 
+                                    @else
+                                    <button class="btn btn-sm btn-danger" disabled>Eliminar</button>
+                                    @endcan
                                 </td>
                             </tr>
                         @endforeach

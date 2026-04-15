@@ -9,6 +9,14 @@ use Illuminate\Http\Request;
 
 class EstadoController extends Controller
 {
+    //Constructor para aplicar el middleware de permisos
+    public function __construct()
+    {
+        $this->middleware('can:admin.estados.index')->only('index');
+        $this->middleware('can:admin.estados.create')->only('create', 'store');
+        $this->middleware('can:admin.estados.edit')->only('edit', 'update');
+        $this->middleware('can:admin.estados.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      */

@@ -54,13 +54,13 @@
                     </div>
                 </div>
 
-                <!-- Campo Categoría -->
+                <!-- Campo Repuesto -->
                 <div class="col-md-5">
                     <div class="form-group">
-                        <label for="categoria">Categoría</label>
+                        <label for="categoria">Repuesto</label>
                             <!--<select
-                                 id="categoria"
-                                 name="categoria"
+                                 id="repuesto"
+                                 name="repuesto"
                                  class="form-control select2 @error('categoria') is-invalid @enderror"
                              >
                                     <option value="">Seleccione una categoría</option>
@@ -92,9 +92,13 @@
                 <!-- Botón -->
                 <div class="col-md-2">
                     <div class="form-group">
+                        @can('admin.repuestos.create')
                         <button class="btn btn-primary btn-block mt-4">
                             Crear Repuesto
                         </button>
+                        @else
+                        <button class="btn btn-primary btn-block mt-4" disabled>Crear Repuesto
+                        @endcan
                     </div>
                 </div>
             </div>
@@ -122,14 +126,22 @@
                             <td>{{ $repuesto->nombre }}</td>
                             <td>{{ $repuesto->categoria }}</td>
                             <td width="10px">
+                                    @can('admin.repuestos.edit')
                                     <a href="{{ route('admin.repuestos.edit', $repuesto) }}" class="btn btn-sm btn-warning">Editar</a>
+                                    @else
+                                    <button class="btn btn-sm btn-warning" disabled>Editar</button>
+                                    @endcan
                             </td>
                             <td width="10px">
-                                <form action="{{ route('admin.repuestos.destroy', $repuesto) }}" method="POST" style="display:inline-block;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este repuesto?')">Eliminar</button>
-                                </form> 
+                                @can('admin.repuestos.destroy')
+                                 <form action="{{ route('admin.repuestos.destroy', $repuesto) }}" method="POST" style="display:inline-block;">
+                                     @csrf
+                                     @method('DELETE')
+                                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este repuesto?')">Eliminar</button>
+                                 </form> 
+                                 @else
+                                 <button class="btn btn-sm btn-danger" disabled>Eliminar</button>
+                                    @endcan
                             </td>
                         </tr>
                     @endforeach

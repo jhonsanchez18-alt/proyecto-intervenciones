@@ -91,9 +91,15 @@
                 <!-- Botón -->
                 <div class="col-md-2">
                     <div class="form-group">
-                        <button class="btn btn-primary btn-block mt-4">
-                            Crear Iten
-                        </button>
+                        @can('admin.itens.create')
+                            <button class="btn btn-primary btn-block mt-4">
+                                Crear Iten
+                            </button>
+                        @else
+                            <button class="btn btn-primary btn-block mt-4" disabled>
+                                Crear Iten
+                            </button>
+                        @endcan
                     </div>
                 </div>
             </div>
@@ -121,14 +127,22 @@
                             <td>{{ $iten->nombre }}</td>
                             <td>{{ $iten->categoria }}</td>
                             <td width="10px">
+                                @can('admin.itens.edit')
                                     <a href="{{ route('admin.itens.edit', $iten) }}" class="btn btn-sm btn-warning">Editar</a>
+                                @else
+                                    <button class="btn btn-sm btn-warning" disabled>Editar</button>
+                                @endcan
                             </td>
                             <td width="10px">
-                                <form action="{{ route('admin.itens.destroy', $iten) }}" method="POST" style="display:inline-block;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este repuesto?')">Eliminar</button>
-                                </form> 
+                                @can('admin.itens.destroy')
+                                    <form action="{{ route('admin.itens.destroy', $iten) }}" method="POST" style="display:inline-block;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este repuesto?')">Eliminar</button>
+                                    </form>
+                                @else
+                                    <button class="btn btn-sm btn-danger" disabled>Eliminar</button>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach

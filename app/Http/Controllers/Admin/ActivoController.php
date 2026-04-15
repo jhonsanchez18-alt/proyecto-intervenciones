@@ -18,6 +18,14 @@ use App\Models\Responsable;
 
 class ActivoController extends Controller
 {
+    // Agregamos el constructor para aplicar el middleware de autenticación
+public function __construct()
+{
+    $this->middleware('can:admin.activos.index')->only('index');
+    $this->middleware('can:admin.activos.edit')->only('edit', 'update');
+    $this->middleware('can:admin.activos.create')->only('create', 'store');
+    $this->middleware('can:admin.activos.destroy')->only('destroy');
+}
     /**
      * Display a listing of the resource.
      */

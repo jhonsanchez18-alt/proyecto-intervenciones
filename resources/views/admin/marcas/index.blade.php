@@ -33,8 +33,12 @@
 
 
 <!-- Card formulario crear Marcas -->
-        <div class="card">
-        <div class="card-body">
+ 
+<div class="card">
+  
+  
+
+      <div class="card-body">
         <form action="{{ route('admin.marcas.store') }}" method="POST">
             @csrf
 
@@ -72,15 +76,20 @@
                 <!-- Botón -->
                 <div class="col-md-2">
                     <div class="form-group">
+                        @can('admin.marcas.create')
                         <button class="btn btn-primary btn-block mt-4">
                             Crear Marca
                         </button>
+                        @else
+                        <button class="btn btn-primary btn-block mt-4" disabled>Crear Marca</button>
+                        @endcan
                     </div>
                 </div>
             </div>
 
         </form>
-    </div>
+     </div>
+    
 </div>
 
    <!-- Card para mostrar todas las marcas-->
@@ -102,14 +111,23 @@
                             <td>{{ $marca->nombre }}</td>
                             <td>{{ $marca->descripcion }}</td>
                             <td width="10px">
-                                    <a href="{{ route('admin.marcas.edit', $marca) }}" class="btn btn-sm btn-warning">Editar</a>
-                            </td>
+                            @can('admin.marcas.edit')
+                             <a href="{{ route('admin.marcas.edit', $marca) }}" class="btn btn-sm btn-warning">Editar</a>
+                            @else
+                             <button class="btn btn-sm btn-warning" disabled>Editar</button>
+                            @endcan
+                        </td>
                             <td width="10px">
-                                <form action="{{ route('admin.marcas.destroy', $marca) }}" method="POST" style="display:inline-block;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este estado?')">Eliminar</button>
-                                </form> 
+                                @can('admin.marcas.destroy')
+                                 <form action="{{ route('admin.marcas.destroy', $marca) }}" method="POST" style="display:inline-block;">
+                                     @csrf
+                                     @method('DELETE')
+                                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar esta marca?')">Eliminar</button>
+                                 </form>
+                                @else
+                                 <button class="btn btn-sm btn-danger" disabled>Eliminar</button>
+                                @endcan
+                                
                             </td>
                         </tr>
                     @endforeach

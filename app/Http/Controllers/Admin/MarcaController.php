@@ -8,6 +8,14 @@ use App\Models\Marca;
 
 class MarcaController extends Controller
 {
+    //middleware para proteger las rutas
+    public function __construct()
+    {
+        $this->middleware('can:admin.marcas.index')->only('index');
+        $this->middleware('can:admin.marcas.create')->only('create', 'store');
+        $this->middleware('can:admin.marcas.edit')->only('edit', 'update');
+        $this->middleware('can:admin.marcas.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      */

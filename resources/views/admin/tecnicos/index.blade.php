@@ -72,9 +72,14 @@
                 <!-- Botón -->
                 <div class="col-md-2">
                     <div class="form-group">
+                        @can('admin.tecnicos.create')
                         <button class="btn btn-primary btn-block mt-4">
                             Crear Tecnico
                         </button>
+                        @else
+                        <button class="btn btn-primary btn-block mt-4" disabled>
+                            Crear Tecnico
+                        @endcan
                     </div>
                 </div>
             </div>
@@ -83,7 +88,7 @@
     </div>
 </div>
 
-   <!-- Card para mostrar todas las marcas-->
+   <!-- Card para mostrar todos los técnicos -->
     <div class="card">
         <card-body>
             <table class="table table-striped">
@@ -102,14 +107,22 @@
                             <td>{{ $tecnico->nombre }}</td>
                             <td>{{ $tecnico->especialidad }}</td>
                             <td width="10px">
+                                @can('admin.tecnicos.edit')
                                     <a href="{{ route('admin.tecnicos.edit', $tecnico) }}" class="btn btn-sm btn-warning">Editar</a>
+                                @else
+                                    <button class="btn btn-sm btn-warning" disabled>Editar</button>
+                                @endcan
                             </td>
                             <td width="10px">
+                                @can('admin.tecnicos.destroy')
                                 <form action="{{ route('admin.tecnicos.destroy', $tecnico) }}" method="POST" style="display:inline-block;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este estado?')">Eliminar</button>
                                 </form> 
+                                @else
+                                <button class="btn btn-sm btn-danger" disabled>Eliminar</button>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach

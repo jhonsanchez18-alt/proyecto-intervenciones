@@ -32,7 +32,7 @@
 @endif
 
 
-<!-- Card formulario crear categorias -->
+<!-- Card formulario crear estados -->
         <div class="card">
         <div class="card-body">
         <form action="{{ route('admin.estados.store') }}" method="POST">
@@ -72,9 +72,13 @@
                 <!-- Botón -->
                 <div class="col-md-2">
                     <div class="form-group">
+                        @can('admin.estados.create')
                         <button class="btn btn-primary btn-block mt-4">
                             Crear estado
                         </button>
+                        @else
+                        <button class="btn btn-primary btn-block mt-4" disabled>Crear Estado</button>
+                        @endcan
                     </div>
                 </div>
             </div>
@@ -102,14 +106,22 @@
                             <td>{{ $estado->nombre }}</td>
                             <td>{{ $estado->descripcion }}</td>
                             <td width="10px">
+                                @can('admin.estados.edit')
                                     <a href="{{ route('admin.estados.edit', $estado) }}" class="btn btn-sm btn-warning">Editar</a>
+                                @else
+                                    <button class="btn btn-sm btn-warning" disabled>Editar</button>
+                                @endcan
                             </td>
                             <td width="10px">
+                                @can('admin.estados.destroy')
                                 <form action="{{ route('admin.estados.destroy', $estado) }}" method="POST" style="display:inline-block;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este estado?')">Eliminar</button>
                                 </form> 
+                                @else
+                                <button class="btn btn-sm btn-danger" disabled>Eliminar</button>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach

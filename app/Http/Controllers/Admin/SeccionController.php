@@ -8,6 +8,14 @@ use App\Models\Seccion;
 
 class SeccionController extends Controller
 {
+    //middleware para proteger las rutas
+    public function __construct()
+    {
+        $this->middleware('can:admin.secciones.index')->only('index');
+        $this->middleware('can:admin.secciones.create')->only('create','store');
+        $this->middleware('can:admin.secciones.edit')->only('edit','update');
+        $this->middleware('can:admin.secciones.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      */

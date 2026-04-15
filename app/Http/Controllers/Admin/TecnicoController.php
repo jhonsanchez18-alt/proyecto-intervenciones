@@ -9,6 +9,14 @@ use Illuminate\Http\Request;
 
 class TecnicoController extends Controller
 {
+    //middleware para permisos
+    public function __construct()
+    {
+        $this->middleware('can:admin.tecnicos.index')->only('index');
+        $this->middleware('can:admin.tecnicos.create')->only('create','store');
+        $this->middleware('can:admin.tecnicos.edit')->only('edit','update');
+        $this->middleware('can:admin.tecnicos.destroy')->only('destroy');
+    }   
     /**
      * Display a listing of the resource.
      */

@@ -9,6 +9,16 @@ use Illuminate\Http\Request;
 
 class ItensController extends Controller
 {
+    // Constructor para aplicar el middleware de permisos
+    public function __construct()
+    {
+        $this->middleware('can:admin.itens.index')->only('index');
+        $this->middleware('can:admin.itens.create')->only('create', 'store');
+        $this->middleware('can:admin.itens.edit')->only('edit', 'update');
+        $this->middleware('can:admin.itens.destroy')->only('destroy');
+    }
+
+
     /**
      * Display a listing of the resource.
      */

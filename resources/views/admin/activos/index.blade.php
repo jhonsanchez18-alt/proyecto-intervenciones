@@ -33,21 +33,34 @@
 
 
     <!-- Card para mostrar todas los activos fijos-->
+     <!-- Botón para crear nuevo activo fijo -->
+      @can('admin.activos.create')
     <div class="col-md-2 mr-auto">
           
         <!-- Boton para crear activo fijo -->
         <!-- Directiva can mostrar boton solo a los usuarios con rol que tengan permiso admin.activos.create -->
-        @can('admin.activos.create')
+       
         <div class="form-group">
                         <a href="{{ route('admin.activos.create') }}">
                         <button class="btn btn-primary btn-block mt-4">
                                  Crear activo fijo
                         </button>
                         </a>
-                    </div>
-        @endcan
+        </div>
+      
                     
-        </div> 
+    </div> 
+      @else
+      <div class="col-md-2 mr-auto">
+        <div class="form-group">
+                        <a href="">
+                        <button class="btn btn-primary btn-block mt-4" disabled>
+                                 Crear activo fijo
+                        </button>
+                        </a>
+        </div>
+      </div>
+    @endcan
     <div class="card">
         <div class="card-body">
             <table class="table table-striped">

@@ -32,7 +32,7 @@
 @endif
 
 
-<!-- Card formulario crear Repuestos -->
+<!-- Card formulario crear Secciones -->
         <div class="card">
         <div class="card-body">
         <form action="{{ route('admin.secciones.store',) }}" method="POST">
@@ -72,9 +72,15 @@
                 <!-- Botón -->
                 <div class="col-md-2">
                     <div class="form-group">
+                        @can('admin.secciones.create')
                         <button class="btn btn-primary btn-block mt-4">
                             Crear Sección
                         </button>
+                        @else
+                        <button class="btn btn-primary btn-block mt-4" disabled>
+                            Crear Sección
+                        </button>
+                        @endcan
                     </div>
                 </div>
             </div>
@@ -102,14 +108,22 @@
                             <td>{{ $seccione->nombre }}</td>
                             <td>{{ $seccione->descripcion }}</td>
                             <td width="10px">
+                                @can('admin.secciones.edit')
                                     <a href="{{ route('admin.secciones.edit', $seccione) }}" class="btn btn-sm btn-warning">Editar</a>
+                                @else
+                                    <button class="btn btn-sm btn-warning" disabled>Editar</button>
+                                @endcan
                             </td>
                             <td width="10px">
+                                @can('admin.secciones.destroy')
                                 <form action="{{ route('admin.secciones.destroy', $seccione) }}" method="POST" style="display:inline-block;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar esta sección?')">Eliminar</button>
                                 </form> 
+                                @else
+                                <button class="btn btn-sm btn-danger" disabled>Eliminar</button>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach

@@ -72,9 +72,14 @@
                 <!-- Botón -->
                 <div class="col-md-2">
                     <div class="form-group">
+                        @can('admin.responsables.create')
                         <button class="btn btn-primary btn-block mt-4">
                             Crear Responsable
                         </button>
+                        @else
+                        <button class="btn btn-primary btn-block mt-4" disabled>
+                            Crear Responsable   
+                        @endcan
                     </div>
                 </div>
             </div>
@@ -102,14 +107,22 @@
                             <td>{{ $responsable->name}}</td>
                             <!--<td>{{ $responsable->descripcion }}</td>-->
                             <td width="10px">
+                                @can('admin.responsables.edit')
                                     <a href="{{ route('admin.responsables.edit', $responsable) }}" class="btn btn-sm btn-warning">Editar</a>
-                            </td>
+                                @else
+                                    <button class="btn btn-sm btn-warning" disabled>Editar</button>
+                                @endcan
+                            </td> 
                             <td width="10px">
+                                @can('admin.responsables.destroy')
                                 <form action="{{ route('admin.responsables.destroy', $responsable) }}" method="POST" style="display:inline-block;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este repuesto?')">Eliminar</button>
                                 </form> 
+                                @else
+                                <button class="btn btn-sm btn-danger" disabled>Eliminar</button>    
+                                @endcan
                             </td>
                         </tr>
                     @endforeach

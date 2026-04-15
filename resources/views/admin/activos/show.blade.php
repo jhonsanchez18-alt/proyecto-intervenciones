@@ -31,7 +31,7 @@
     </script>
 @endif  
 
-
+    // Detalles del activo
    <div class="card">
     <div class="card-header text-center">
         <h5 class="uppercase">{{ $activo->nombre }}</h5> 
@@ -88,11 +88,13 @@
     <div class="card">
 
     {{-- HEADER --}}
+    
     <div class="card-header d-flex justify-content-between align-items-center">
         <a href="{{ route('admin.activos.intervenciones.create', $activo) }}"
            class="btn btn-primary btn-sm">
             <i class="fas fa-plus"></i> Añadir Intervención
         </a>
+        listado de intervenciones
         <h6 class="text-uppercase mb-0">Registro de Intervenciones</h6>
 
         
@@ -113,6 +115,7 @@
             </thead>
 
             <tbody>
+                
                 @forelse($activo->intervenciones as $intervencione)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
@@ -121,21 +124,33 @@
                         <td>{{ $intervencione->tipo_intervencion }}</td>
                         <td>{{ $intervencione->tecnico->nombre }}</td>
                         <td width="10px pr-10">
+                           
+                            @can('admin.intervenciones.show')   
                             <a href="{{ route('admin.intervenciones.show', $intervencione) }}"
                                class="btn btn-info btn-sm">
                                &nbsp;&nbsp;&nbsp;&nbspVer&nbsp;&nbsp;&nbsp;&nbsp;
                             </a>
+                            @else
+                             <button class="btn btn-info btn-sm" disabled>
+                               &nbsp;&nbsp;&nbsp;&nbspVer&nbsp;&nbsp;&nbsp;&nbsp;
+                            @endcan
                             
                         </td>
                         <td width="10px">
+                            @can('admin.intervenciones.edit')
                             <a href="{{ route('admin.activos.intervenciones.edit', [
                                     $intervencione->activo,
                                     $intervencione
                                 ]) }}" class="btn btn-sm btn-warning">
                                     Editar
                             </a>
+                            @else
+                             <button class="btn btn-sm btn-warning" disabled>
+                                    Editar
+                            @endcan
                         </td>
                         <td width="10px">
+                            @can('admin.intervenciones.destroy')
                             <form action="{{ route('admin.activos.intervenciones.destroy', ['activo' => $activo->id, 'intervencione' => $intervencione->id]) }}"
                                 method="POST"
                                 onsubmit="return confirm('¿Seguro que deseas eliminar esta intervención? Esta acción no se puede deshacer.')">
@@ -146,6 +161,11 @@
                                      Eliminar
                                 </button>
                             </form>
+                            @else
+                             <button class="btn btn-sm btn-danger" disabled>
+                                     Eliminar
+                                </button>
+                            @endcan
                         </td>
                     </tr>
                 @empty

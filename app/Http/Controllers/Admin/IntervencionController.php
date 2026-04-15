@@ -15,7 +15,17 @@ use App\Models\Repuesto;
 
 class IntervencionController extends Controller
 {
+    // Agregamos el constructor para aplicar el middleware de autenticación
+    public function __construct()
+    {
+    $this->middleware('can:admin.intervenciones.index')->only('index');
+    $this->middleware('can:admin.intervenciones.edit')->only('edit', 'update');
+    $this->middleware('can:admin.intervenciones.create')->only('create', 'store');
+    $this->middleware('can:admin.intervenciones.destroy')->only('destroy');
+    }
+
     use AuthorizesRequests;
+    
     /**
      * Display a listing of the resource.
      */
@@ -135,7 +145,7 @@ public function edit(Activo $activo, Intervencion $intervencione)
         'tipo_intervencion'  => $request->tipo_intervencion,
         'tecnico_id'         => $request->tecnico_id,
         'quien_recibe'       => $request->quien_recibe,
-        'observaciones'      => $request->observaciones,
+        'observaciones'      => $request->observaciones,  
         'updated_by'         => auth()->id(),
     ]);
 

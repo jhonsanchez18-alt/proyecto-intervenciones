@@ -8,6 +8,14 @@ use App\Models\Responsable;
 
 class ResponsableController extends Controller
 {
+    //middleware para proteger las rutas
+    public function __construct()
+    {
+        $this->middleware('can:admin.responsables.index')->only('index');
+        $this->middleware('can:admin.responsables.create')->only('create','store');
+        $this->middleware('can:admin.responsables.edit')->only('edit','update');
+        $this->middleware('can:admin.responsables.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      */

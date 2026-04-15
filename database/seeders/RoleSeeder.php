@@ -84,6 +84,8 @@ class RoleSeeder extends Seeder
             'admin.activos.show',
             'admin.intervenciones.index',
             'admin.intervenciones.create',
+            'admin.intervenciones.show',
+            'admin.intervenciones.edit',
             'admin.marcas.index',
             'admin.marcas.create',
             'admin.repuestos.index',
@@ -94,7 +96,9 @@ class RoleSeeder extends Seeder
         $Role3->givePermissionTo([
             'admin.home',
             'admin.activos.index',
+            'admin.activos.show',
             'admin.intervenciones.index',
+            'admin.intervenciones.show',
         ]);
 
 

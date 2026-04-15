@@ -8,10 +8,19 @@ use App\Models\User;
 use Laravel\Jetstream\Role;
 //importamos el modelo Role de Spatie para obtener los roles disponibles
 use Spatie\Permission\Models\Role as ModelsRole;
+use Illuminate\Support\Facades\Hash;
 
 
 class UserController extends Controller
 {
+
+// Agregamos el constructor para aplicar el middleware de autenticación
+public function __construct()
+{
+    $this->middleware('can:admin.users.index')->only('index');
+    $this->middleware('can:admin.users.edit')->only('edit', 'update');
+}
+
     /**
      * Display a listing of the resource.
      */
@@ -34,8 +43,33 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        
+
+    // 1️⃣ Validación
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email',
+        'password' => 'required|string|min:6',
+        'role' => 'required|exists:roles,name', // 👈 ahora es name
+    ]);
+
+    // 2️⃣ Crear usuario
+    $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+    ]);
+
+    // 3️⃣ Asignar rol directamente
+    $user->assignRole($request->role);
+
+    // 4️⃣ Redirección
+    return redirect()
+        ->route('admin.users.index')
+        ->with('success', "Usuario {$user->name} creado correctamente");
+
+}
+    
 
     /**
      * Display the specified resource.
@@ -72,6 +106,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect()
+            ->route('admin.users.index')
+            ->with('success', "Usuario {$user->name} eliminado correctamente");
+
     }
 }
